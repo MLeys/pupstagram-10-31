@@ -2,6 +2,9 @@ import tokenService from './tokenService';
 
 const BASE_URL = '/api/users/';
 
+// This deals with the type of request the USER may want to make on the client, 
+// so what type of http requests the user may make to the express server
+
 function signup(user) {
   return fetch(BASE_URL + 'signup', {
     method: 'POST',

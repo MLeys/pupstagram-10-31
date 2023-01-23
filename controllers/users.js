@@ -13,9 +13,9 @@ export default {
 async function signup(req, res) {
   const user = new User(req.body);
   try {
-    await user.save();
+    await user.save(); // user model .pre('save') function is running which hashes the password
     const token = createJWT(user);
-    res.json({ token });
+    res.json({ token }); // set('toJSON',) in user model is being called, and deleting the users password from the token
   } catch (err) {
     // Probably a duplicate email
     res.status(400).json(err);
