@@ -2,11 +2,12 @@ import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import { useState } from "react";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
+import { useNavigate } from "react-router-dom";
 // Since we want to make a request as a user about a user
 // we need to import the userService
 import userService from "../../utils/userService";
 
-function SignUpPage() {
+function SignUpPage({handleSignUpOrLogin}) {
   const [state, setState] = useState({
     username: "",
     email: "",
@@ -18,6 +19,11 @@ function SignUpPage() {
   const [selectedFile, setSelectedFile] = useState("");
 
   const [error, setError] = useState("");
+
+  // initialize the useNavigate hook, which allows us to programatticaly change routes
+  // aka after our signup call in our handleSubmit
+  // navigate is a function that accepts a routes path
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault(); // stop the browser from submitting the form, we will use fetch. We are using a SPA (single, page, app, no page reloads)
@@ -41,10 +47,12 @@ function SignUpPage() {
 
 	try {
 		
-		await userService.signup(formData);
+		await userService.signup(formData); // this finishes, after the signup fetch call sets the token in localstorage
 		// after this we can route the user to whereever we want
 		// the jwt token is now stored in localstorage
-
+		handleSignUpOrLogin(); // this function is from the app, which gets the token and sets the user in the App component state
+		// switch the view, switch what page we are on
+		navigate('/')
 
 	} catch(err){
 		console.log(err.message, ' this is the error in signup')
