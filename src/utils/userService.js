@@ -13,9 +13,10 @@ function signup(user) {
     body: user // <- user needs to be formData (we did that in the handleSubmit in the SignupPage)
   })
   .then(res => {
+    // THis is handling the response from our express server after we submit our form and get a response from the server
     if (res.ok) return res.json();
     // Probably a duplicate email
-    throw new Error('Email already taken!');
+    throw new Error('Email already taken!'); // throws an error to the catch block where we called the function, SignUpPage handleSUbmit
   })
   // Parameter destructuring!
   .then(({token}) => tokenService.setToken(token));
