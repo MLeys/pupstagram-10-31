@@ -11,9 +11,10 @@ export default {
 
 
 async function signup(req, res) {
+  console.log(req.body, " <- contents of the form", req.file, ' <- this is req.file')
   const user = new User(req.body);
   try {
-    await user.save(); // user model .pre('save') function is running which hashes the password
+    // await user.save(); // user model .pre('save') function is running which hashes the password
     const token = createJWT(user);
     res.json({ token }); // set('toJSON',) in user model is being called, and deleting the users password from the token
   } catch (err) {

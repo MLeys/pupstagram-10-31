@@ -1,5 +1,6 @@
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import { useState } from "react";
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 // Since we want to make a request as a user about a user
 // we need to import the userService
@@ -18,7 +19,7 @@ function SignUpPage() {
 
   const [error, setError] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault(); // stop the browser from submitting the form, we will use fetch. We are using a SPA (single, page, app, no page reloads)
 
     // before we use our userService function
@@ -37,6 +38,22 @@ function SignUpPage() {
 	// if you console.log(formData, ' <this won't yield anything useful')
     // If you want to view the formData you need to loop over the object
     console.log(formData.forEach((item) => console.log(item)));
+
+	try {
+		
+		await userService.signup(formData);
+		// after this we can route the user to whereever we want
+		// the jwt token is now stored in localstorage
+
+
+	} catch(err){
+		console.log(err.message, ' this is the error in signup')
+		setError('Check your terminal, there was an error signing up')
+	}
+
+
+
+
   }
 
   function handleChange(e) {

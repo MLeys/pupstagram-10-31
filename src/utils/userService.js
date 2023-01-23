@@ -8,9 +8,9 @@ const BASE_URL = '/api/users/';
 function signup(user) {
   return fetch(BASE_URL + 'signup', {
     method: 'POST',
-    headers: new Headers({'Content-Type': 'application/json'}),  // If you are sending a file/photo over
-    // what do datatype do you need to change this too?
-    body: JSON.stringify(user)
+   // you don't need a header if you are sending multipart/formdata (aka sending a photo), the browser will automatically 
+   // detect and append the headers
+    body: user // <- user needs to be formData (we did that in the handleSubmit in the SignupPage)
   })
   .then(res => {
     if (res.ok) return res.json();
