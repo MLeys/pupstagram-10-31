@@ -4,6 +4,10 @@ import PostDisplay from "../../components/PostDisplay/PostDisplay";
 
 import { useState } from 'react'
 
+// import { create } from '../../utils/postApi'
+import * as postsAPI from '../../utils/postApi';
+
+
 import { Grid } from "semantic-ui-react";
 
 // think of your pages as containers
