@@ -12,6 +12,8 @@ import { v4 as uuidv4 } from 'uuid';
 // So we don't have to worry about people having different bucket names we'll make the bucketname an environment variable
 const BUCKET_NAME = process.env.BUCKET_NAME
 console.log(BUCKET_NAME, 'bucketname')
+
+
 export default {
   signup,
   login
@@ -41,9 +43,10 @@ async function signup(req, res) {
       await user.save(); // user model .pre('save') function is running which hashes the password
       const token = createJWT(user);
       res.json({ token }); // set('toJSON',) in user model is being called, and deleting the users password from the token
-    } catch (err) {
+    } catch (error) {
       // Probably a duplicate email
-      res.status(400).json(err);
+      console.log(error)
+      res.status(400).json(error);
     }
 
 

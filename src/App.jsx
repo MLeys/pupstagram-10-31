@@ -24,7 +24,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<h1>Home Pageeeeeeeeeee</h1>} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin}/>} />
       <Route path='/signup' element={<SignUpPage handleSignUpOrLogin={handleSignUpOrLogin} />}/>
     </Routes>
   );
