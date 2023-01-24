@@ -2,7 +2,7 @@ import { set } from "mongoose";
 import { useState } from "react";
 import { Form, Segment, Button } from "semantic-ui-react";
 
-function AddPuppyForm() {
+function AddPuppyForm({handleAddPost}) {
 
   const [caption, setCaption] = useState('');
   const [photo, setPhoto] = useState(null)
@@ -15,8 +15,15 @@ function AddPuppyForm() {
 	setPhoto(e.target.files[0])
   }
 
-  function handleSubmit(){
+  function handleSubmit(e){
+	e.preventDefault();
 
+	// we have to make form data because we are sending over a photo
+	// to our express server
+	const formData = new FormData()
+	formData.append('caption', caption);
+	formData.append('photo', photo)
+	handleAddPost(formData)
   }
 
   return (

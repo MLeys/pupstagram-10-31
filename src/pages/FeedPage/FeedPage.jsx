@@ -2,10 +2,24 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import AddPuppyForm from "../../components/AddPuppyForm/AddPuppyForm";
 import PostDisplay from "../../components/PostDisplay/PostDisplay";
 
+import { useState } from 'react'
+
 import { Grid } from "semantic-ui-react";
 
-
+// think of your pages as containers
+// that store your logic!
 function FeedPage() {
+  const [posts, setPosts] = useState([])
+
+  //Functions here that make our api calls 
+  async function handleAddPost(post){
+	// this is where we will make the api call to our server
+	// because we'll get the response and then we can update state to reflect that change
+	// like adding a new post
+	console.log(post, " <- this is the post object in handle Add post")
+
+  }
+
   return (
     <Grid centered>
       <Grid.Row>
@@ -15,7 +29,7 @@ function FeedPage() {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column style={{ maxWidth: 450 }}>
-          <AddPuppyForm />
+          <AddPuppyForm handleAddPost={handleAddPost}/>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
