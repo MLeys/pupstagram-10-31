@@ -21,6 +21,15 @@ function FeedPage() {
 	// because we'll get the response and then we can update state to reflect that change
 	// like adding a new post
 	console.log(post, " <- this is the post object in handle Add post")
+	try {
+
+		const response = await postsAPI.create(post)
+		console.log(response, ' from postsApi create')
+    setPosts([response.post, ...posts])
+
+	} catch(err){
+		console.log(err, ' in handleAddPost')
+	}
 
   }
 

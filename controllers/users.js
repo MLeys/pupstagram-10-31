@@ -34,7 +34,7 @@ async function signup(req, res) {
       console.log('===============================')
       console.log(err, ' <- error from aws, Probably telling you your keys arent correct')
       console.log('===============================')
-      res.status(400).json({error: 'error from aws, check your terminal'})
+      return res.status(400).json({error: 'error from aws, check your terminal'})
     }
 
 
@@ -57,6 +57,7 @@ async function signup(req, res) {
 async function login(req, res) {
  
   try {
+    // if this doesn't find anything it returns undefined
     const user = await User.findOne({email: req.body.email});
    
     if (!user) return res.status(401).json({err: 'bad credentials'});
