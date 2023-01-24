@@ -46,7 +46,7 @@ function login(creds) {
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(creds)
   })
-  .then(res => {
+  .then(res => {// this is where we recieve the respons from the login controller
     // Valid login if we have a status of 2xx (res.ok)
     if (res.ok) return res.json();
     throw new Error('Bad Credentials!');

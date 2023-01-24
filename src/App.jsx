@@ -4,7 +4,7 @@ import "./App.css";
 
 import SignUpPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-
+import FeedPage from './pages/FeedPage/FeedPage';
 // import the userService so we have a function (getUser) that can get the jwt token 
 // from localstorage and decode it
 import userService from './utils/userService';
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<h1>Home Pageeeeeeeeeee</h1>} />
+      <Route path="/" element={<FeedPage />} />
       <Route path="/login" element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin}/>} />
       <Route path='/signup' element={<SignUpPage handleSignUpOrLogin={handleSignUpOrLogin} />}/>
     </Routes>
