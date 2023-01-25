@@ -2,7 +2,7 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import AddPuppyForm from "../../components/AddPuppyForm/AddPuppyForm";
 import PostDisplay from "../../components/PostDisplay/PostDisplay";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // import { create } from '../../utils/postApi'
 import * as postsAPI from '../../utils/postApi';
@@ -33,6 +33,24 @@ function FeedPage() {
 
   }
 
+  async function getPosts() {
+    try {
+      const response = await postsAPI.getAll();
+      console.log(response, " data");
+      setPosts([...response.data]);
+      
+    } catch (err) {
+      console.log(err.message, " this is the error");
+      
+    }
+  }
+
+  useEffect(() => {
+    //Getting posts, C(R)UD
+
+    getPosts();
+  }, []); 
+
   return (
     <Grid centered>
       <Grid.Row>
@@ -47,7 +65,7 @@ function FeedPage() {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column style={{ maxWidth: 450 }}>
-          <PostDisplay />
+          <PostDisplay posts={posts}/>
         </Grid.Column>
       </Grid.Row>
     </Grid>

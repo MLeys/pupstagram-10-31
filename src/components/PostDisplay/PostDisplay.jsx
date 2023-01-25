@@ -1,9 +1,13 @@
-function PostDisplay() {
-  return (
-    <div>
-      THis is where we will render out all the cards when someone makes a post
-    </div>
-  );
+import { Card } from "semantic-ui-react";
+import PostCard from '../PostCard/PostCard'
+
+
+function PostDisplay({posts}) {
+  const postsJsx = posts.map((post) => {
+    return <PostCard post={post} key={post._id} />;
+  });
+
+  return <Card.Group itemsPerRow={1}>{postsJsx}</Card.Group>;
 }
 
 export default PostDisplay;

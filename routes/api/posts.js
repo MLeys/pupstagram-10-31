@@ -7,5 +7,5 @@ const upload = multer()
 
 // single('photo') matches formData.append('photo', photo) in addPuppyForm
 router.post('/', upload.single('photo'), postsCtrl.create);
-
+router.get('/', postsCtrl.index)
 export default router;

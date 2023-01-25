@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import Post from '../models/post.js'
 import jwt from 'jsonwebtoken'
 const SECRET = process.env.SECRET;
 
@@ -16,9 +17,26 @@ console.log(BUCKET_NAME, 'bucketname')
 
 export default {
   signup,
-  login
+  login, 
+  profile
 };
 
+async function profile(req, res){
+  try {
+    // First find the user using the params from the request
+    // findOne finds first match, its useful to have unique usernames!
+    const user = await User.findOne({username: req.params.username})
+    // Then find all the posts that belong to that user
+    if(!user) return res.status(404).json({error: 'User not found'})
+
+    const posts = await Post.find({user: user._id}).populate("user").exec();
+    console.log(posts, ' this posts')
+    res.status(200).json({data: posts, user: user})
+  } catch(err){
+    console.log(err)
+    res.status(400).json({err})
+  }
+}
 
 async function signup(req, res) {
   console.log(req.body, " <- contents of the form", req.file, ' <- this is req.file')
