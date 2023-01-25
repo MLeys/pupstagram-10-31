@@ -22,6 +22,7 @@ function ProfilePage() {
   useEffect(() => {
     async function getProfile() {
 		try {
+			// making the API CALL
 			const response = await userService.getProfile(username)
 
 			setLoading(false);// set loading to false

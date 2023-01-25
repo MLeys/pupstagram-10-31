@@ -16,13 +16,14 @@ function FeedPage() {
   const [posts, setPosts] = useState([])
 
   //Functions here that make our api calls 
+  // CREATE (C)rud
   async function handleAddPost(post){
 	// this is where we will make the api call to our server
 	// because we'll get the response and then we can update state to reflect that change
 	// like adding a new post
 	console.log(post, " <- this is the post object in handle Add post")
 	try {
-
+    // making an api call
 		const response = await postsAPI.create(post)
 		console.log(response, ' from postsApi create')
     setPosts([response.post, ...posts])
@@ -33,8 +34,10 @@ function FeedPage() {
 
   }
 
+  // Read C(R)UD
   async function getPosts() {
     try {
+      // making an api call
       const response = await postsAPI.getAll();
       console.log(response, " data");
       setPosts(response.data);
