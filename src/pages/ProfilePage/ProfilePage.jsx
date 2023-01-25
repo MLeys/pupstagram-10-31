@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import ProfilePostDisplay from "../../components/ProfilePostDisplay/ProfilePostDisplay";
 import ProfileBio from "../../components/ProfileBio/ProfileBio";
@@ -13,11 +13,44 @@ function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [profileUser, setProfileUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   const { username } = useParams(); // { username} matches the the route in your App.js <route path='/:username'>
-  
-  console.log('username in Profile page -> ', username)
+
+  console.log("username in Profile page -> ", username);
+
+  useEffect(() => {
+    async function getProfile() {
+		try {
+			const response = await userService.getProfile(username)
+
+			setLoading(false);// set loading to false
+			setPosts(response.data)
+			setProfileUser(response.user)
+			console.log(response, ' <- data is getprofile')
+		} catch(err){
+			console.log(err.message, ' error in getProfile something went wrong with the getProfile api request, check server terminal')
+			setError('Profile does not exist'); // <- this is what we show
+			// on the page
+		}
+	}
+
+    getProfile();
+  }, [username]);
+
+  if (error) {
+    return (
+      <>
+        <PageHeader />
+        <h1>{error}</h1>
+      </>
+    );
+  }
+
+  if (loading) {
+    return <h1>Loading....</h1>;
+  }
+
   return (
     <Grid>
       <Grid.Row>
