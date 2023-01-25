@@ -1,6 +1,7 @@
 import { Card, Icon, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 function PostCard({ post }) {
+	
   return (
     <Card raised>
       <Card.Content textAlign="left">

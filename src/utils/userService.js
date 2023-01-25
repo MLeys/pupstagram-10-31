@@ -54,9 +54,27 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
+// the definition
+// this is the function that makes a request to the profile controller function on the express back end api
+function getProfile(username){
+  return fetch(BASE_URL + username, {
+    headers: {
+			Authorization: "Bearer " + tokenService.getToken() 
+			//this is how we grab the token from local storage
+		}
+  }).then(res => {
+    if(res.ok) return res.json() // decoding the json from the server response
+    // so that we can interact with it like a regular javascript object
+    throw new Error('Error from getProfile request, check the server terminal')
+  })
+}
+
+
+
 export default {
   signup, 
   getUser,
   logout,
-  login
+  login,
+  getProfile
 };
