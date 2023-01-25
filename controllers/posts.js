@@ -36,7 +36,7 @@ function create(req, res) {
         photoUrl: data.Location // <- this is from aws, it is the URL that our picture exists at in s3 bucket
       })
 
-      await post.populate('user')
+      await post.populate('user')// populating on a document "post"
       // respond to the client
       res.status(201).json({post})
 
@@ -52,7 +52,7 @@ async function index(req, res) {
     // this populates the user when you find the posts
     // so you'll have access to the users information
     // when you fetch the posts
-    const posts = await Post.find({}).populate("user").exec();
+    const posts = await Post.find({}).populate("user").exec(); // populating on the model
     res.status(200).json({ data: posts });
   } catch (err) {
     res.status(400).json({ err });

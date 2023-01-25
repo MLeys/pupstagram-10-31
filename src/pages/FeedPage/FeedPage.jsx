@@ -37,7 +37,7 @@ function FeedPage() {
     try {
       const response = await postsAPI.getAll();
       console.log(response, " data");
-      setPosts([...response.data]);
+      setPosts(response.data);
       
     } catch (err) {
       console.log(err.message, " this is the error");
@@ -45,6 +45,7 @@ function FeedPage() {
     }
   }
 
+  // this useEffect runs when the Feed page loads!
   useEffect(() => {
     //Getting posts, C(R)UD
 

@@ -1,7 +1,11 @@
 // house all the fetch functions for crud updates on the POST resource
 import tokenService from "./tokenService";
 const BASE_URL = '/api/posts/';
+// THESE FUNCTIONS ARE CALLED In our componets 
+// in the browser to communicate with our EXPRESS SERVER
+// aka the endpoints are our servers routes, which call the controller functions
 
+// Making a request to create a POST
 export function create(data){
 	return fetch(BASE_URL, { // since this is sending a photo (form data) no need to do JSON things
 		method: 'POST',

@@ -2,7 +2,7 @@ import { Card, Icon, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 function PostCard({ post }) {
   return (
-    <Card key={post._id} raised>
+    <Card raised>
       <Card.Content textAlign="left">
         <Card.Header>
           <Link to={`/${post.user.username}`}>
