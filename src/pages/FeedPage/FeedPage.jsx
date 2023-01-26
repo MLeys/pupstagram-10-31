@@ -13,7 +13,7 @@ import { Grid } from "semantic-ui-react";
 
 // think of your pages as containers
 // that store your logic!
-function FeedPage({loggedUser}) {
+function FeedPage({loggedUser, handleLogOut}) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -87,7 +87,7 @@ function FeedPage({loggedUser}) {
   if (error) {
     return (
       <>
-        <PageHeader />
+        <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         <ErrorMessage error={error} />;
       </>
     );
@@ -97,7 +97,7 @@ function FeedPage({loggedUser}) {
     <Grid centered>
       <Grid.Row>
         <Grid.Column>
-          <PageHeader />
+          <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>

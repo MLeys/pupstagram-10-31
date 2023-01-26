@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 // import the userService so we have a function (getUser) that can get the jwt token 
 // from localstorage and decode it
 import userService from './utils/userService';
+import PageHeader from './components/PageHeader/PageHeader';
 
 
 function App() {
@@ -22,13 +23,20 @@ function App() {
     setUser(userService.getUser()) // getUser, gets the jwt from localstorage and decodes it
   }
 
+  function handleLogOut(){
+    setUser(userService.logout());
+  }
+
   return (
-    <Routes>
-      <Route path="/" element={<FeedPage loggedUser={user}/>} />
-      <Route path="/login" element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin}/>} />
-      <Route path='/signup' element={<SignUpPage handleSignUpOrLogin={handleSignUpOrLogin} />}/>
-      <Route path='/:username' element={<ProfilePage loggedUser={user}/>} />
-    </Routes>
+ 
+      <Routes>
+        <Route path="/" element={<FeedPage loggedUser={user} handleLogOut={handleLogOut} />} />
+        <Route path="/login" element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} handleLogOut={handleLogOut} />} />
+        <Route path='/signup' element={<SignUpPage handleSignUpOrLogin={handleSignUpOrLogin} handleLogOut={handleLogOut} />}/>
+        <Route path='/:username' element={<ProfilePage loggedUser={user} handleLogOut={handleLogOut}  />} />
+      </Routes>
+
+
   );
 }
 

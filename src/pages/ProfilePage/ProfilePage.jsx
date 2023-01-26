@@ -13,7 +13,7 @@ import { Grid } from "semantic-ui-react";
 import userService from "../../utils/userService";
 import * as likesAPI from "../../utils/likeApi";
 
-function ProfilePage({ loggedUser }) {
+function ProfilePage({ loggedUser, handleLogOut }) {
   const [posts, setPosts] = useState([]);
   const [profileUser, setProfileUser] = useState({});
   const [loading, setLoading] = useState(true);
@@ -74,7 +74,7 @@ function ProfilePage({ loggedUser }) {
   if (error) {
     return (
       <>
-        <PageHeader />
+        <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         <ErrorMessage error={error} />;
       </>
     );
@@ -83,7 +83,7 @@ function ProfilePage({ loggedUser }) {
   if (loading) {
     return (
       <>
-        <PageHeader />
+        <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         <Loader />
       </>
     );
@@ -93,7 +93,7 @@ function ProfilePage({ loggedUser }) {
     <Grid>
       <Grid.Row>
         <Grid.Column>
-          <PageHeader />
+          <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
