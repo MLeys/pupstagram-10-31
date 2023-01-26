@@ -26,6 +26,8 @@ async function deleteLike(req, res){
         post.likes.remove(req.params.id) // mutating a document
         // req.params.id is the like id 
         await post.save() // after you mutate a document you must save
+        // res is an object that can respond to the client
+        
         res.json({data: 'like removed'})
     } catch(err){
         res.status(400).json({err})

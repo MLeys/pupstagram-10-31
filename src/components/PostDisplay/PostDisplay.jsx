@@ -3,7 +3,7 @@ import { Card, Dimmer, Segment, Image  } from 'semantic-ui-react'
 import PostCard from '../PostCard/PostCard';
 import Loader from '../Loader/Loader';
 
-export default function PostDisplay({posts, numPhotosCol, isProfile, loading}){
+export default function PostDisplay({posts, numPhotosCol, isProfile, loading, addLike, removeLike, loggedUser}){
 
     if(loading){
       return (
@@ -28,6 +28,9 @@ export default function PostDisplay({posts, numPhotosCol, isProfile, loading}){
               post={post}
               key={post._id}
               isProfile={isProfile}
+              addLike={addLike}
+              removeLike={removeLike}
+              loggedUser={loggedUser}
             />
           );
         })}

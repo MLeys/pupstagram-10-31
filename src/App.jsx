@@ -24,10 +24,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<FeedPage />} />
+      <Route path="/" element={<FeedPage loggedUser={user}/>} />
       <Route path="/login" element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin}/>} />
       <Route path='/signup' element={<SignUpPage handleSignUpOrLogin={handleSignUpOrLogin} />}/>
-      <Route path='/:username' element={<ProfilePage />} />
+      <Route path='/:username' element={<ProfilePage loggedUser={user}/>} />
     </Routes>
   );
 }
