@@ -32,10 +32,11 @@ app.use(auth);
 // api routes must be before the "catch all" route
 import userRoutes from './routes/api/users.js';
 import postRoutes from './routes/api/posts.js';
-
+import likeRoutes from './routes/api/likes.js'
 
 app.use('/api/posts',postRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api', likeRoutes);
 // "catch all" route
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

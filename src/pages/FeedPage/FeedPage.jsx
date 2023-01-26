@@ -1,7 +1,7 @@
 import PageHeader from "../../components/PageHeader/PageHeader";
 import AddPuppyForm from "../../components/AddPuppyForm/AddPuppyForm";
 import PostDisplay from "../../components/PostDisplay/PostDisplay";
-
+import Loader from '../../components/Loader/Loader'
 import { useState, useEffect } from 'react'
 
 // import { create } from '../../utils/postApi'
@@ -14,46 +14,69 @@ import { Grid } from "semantic-ui-react";
 // that store your logic!
 function FeedPage() {
   const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  //Functions here that make our api calls 
-  // CREATE (C)rud
-  async function handleAddPost(post){
-	// this is where we will make the api call to our server
-	// because we'll get the response and then we can update state to reflect that change
-	// like adding a new post
-	console.log(post, " <- this is the post object in handle Add post")
-	try {
-    // making an api call
-		const response = await postsAPI.create(post)
-		console.log(response, ' from postsApi create')
-    setPosts([response.post, ...posts])
-
-	} catch(err){
-		console.log(err, ' in handleAddPost')
-	}
-
-  }
-
-  // Read C(R)UD
-  async function getPosts() {
+   // Why?
+  // Creating a POST (C)RUD
+  // cuz we want to update state whenever we change a POST CRUD operations*
+  async function handleAddPost(post) {
+    // post, is coming from the addPostForm component, when we call this function onSubmit props.handleAddPost(formData)
     try {
-      // making an api call
-      const response = await postsAPI.getAll();
-      console.log(response, " data");
-      setPosts(response.data);
-      
+
+      	// this is where we will make the api call to our server
+	      // because we'll get the response and then we can update state to reflect that change
+	      // like adding a new post
+      setLoading(true);
+      const response = await postsAPI.create(post); // waiting for the json to be return from the server and parsed by us!
+
+      // data is the response from the api, the result of the .then if(res.ok) return res.json() in the create postAPI utils function
+      console.log(response, ' handle add post');
+      setPosts([response.post, ...posts]); /// ...posts would keep all the posts in the previous states array
+      setLoading(false);
     } catch (err) {
-      console.log(err.message, " this is the error");
-      
+      // this is the error from the throw block, in the postsAPI.create function
+      console.log(err.message, 'error in addPost');
+      setError("Error creating post, please try again");
     }
   }
 
-  // this useEffect runs when the Feed page loads!
+  async function getPosts() {
+    try {
+      const response = await postsAPI.getAll();
+      console.log(response, " data");
+      setPosts(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err.message, " this is the error in getPosts");
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     //Getting posts, C(R)UD
 
     getPosts();
-  }, []); 
+  }, []); // This is useEffect runs once when the Feed component
+  // loads
+
+  if (error) {
+    return (
+      <>
+        <PageHeader  />
+        <ErrorMessage error={error} />;
+      </>
+    );
+  }
+
+  if (loading) {
+    return (
+      <>
+        <PageHeader  />
+        <Loader />
+      </>
+    );
+  }
 
   return (
     <Grid centered>
@@ -69,7 +92,13 @@ function FeedPage() {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column style={{ maxWidth: 450 }}>
-          <PostDisplay posts={posts}/>
+          <PostDisplay 
+          posts={posts}
+          numPhotosCol={1}
+          isProfile={false}
+          loading={loading}
+          
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>
