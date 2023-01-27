@@ -10,6 +10,8 @@ import * as postsAPI from "../../utils/postApi";
 import * as likesAPI from "../../utils/likeApi";
 
 import { Grid } from "semantic-ui-react";
+import { Route, Routes, Link, useNavigate, Navigate } from "react-router-dom";
+import LoginPage from "../LoginPage/LoginPage";
 
 // think of your pages as containers
 // that store your logic!
@@ -17,6 +19,7 @@ function FeedPage({loggedUser, handleLogOut}) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
 
   async function addLike(postId) {
     // postId exists in the card component
@@ -79,22 +82,31 @@ function FeedPage({loggedUser, handleLogOut}) {
 
   useEffect(() => {
     //Getting posts, C(R)UD
-
+    
     getPosts();
+    
+    // getPosts();
   }, []); // This is useEffect runs once when the Feed component
   // loads
 
   if (error) {
     return (
       <>
+        
         <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
         <ErrorMessage error={error} />;
       </>
     );
   }
 
-  return (
-    <Grid centered>
+  if (!loggedUser) {
+    return (
+        <Navigate to='/login' replace />
+    );
+  } else {
+    return (
+
+      <Grid centered>
       <Grid.Row>
         <Grid.Column>
           <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
@@ -121,5 +133,9 @@ function FeedPage({loggedUser, handleLogOut}) {
     </Grid>
   );
 }
+  }
+
+
+
 
 export default FeedPage;

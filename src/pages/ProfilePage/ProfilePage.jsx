@@ -6,7 +6,7 @@ import ProfileBio from "../../components/ProfileBio/ProfileBio";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 
 import { Grid } from "semantic-ui-react";
 
@@ -18,6 +18,7 @@ function ProfilePage({ loggedUser, handleLogOut }) {
   const [profileUser, setProfileUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
 
   const { username } = useParams(); // { username} matches the the route in your App.js <route path='/:username'>
 
@@ -68,6 +69,7 @@ function ProfilePage({ loggedUser, handleLogOut }) {
   }
 
   useEffect(() => {
+    // (loggedUser) ? navigate("/login") : 
     getProfile();
   }, [username]);
 
@@ -80,42 +82,41 @@ function ProfilePage({ loggedUser, handleLogOut }) {
     );
   }
 
-  if (loading) {
+
+  
+  if (!loggedUser) {
     return (
-      <>
-        <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
-        <Loader />
-      </>
+        <Navigate to='/login' replace />
+    );
+  } else {
+    return (
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
+            <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} username={username} />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <ProfileBio user={profileUser} />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Grid.Column style={{ maxWidth: 750 }}>
+            <PostDisplay
+              posts={posts}
+              numPhotosCol={3}
+              isProfile={true}
+              loading={loading}
+              loggedUser={loggedUser}
+              addLike={addLike}
+              removeLike={removeLike}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
-
-  return (
-    <Grid>
-      <Grid.Row>
-        <Grid.Column>
-          <PageHeader handleLogOut={handleLogOut} loggedUser={loggedUser} />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
-          <ProfileBio user={profileUser} />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row centered>
-        <Grid.Column style={{ maxWidth: 750 }}>
-          <PostDisplay
-            posts={posts}
-            numPhotosCol={3}
-            isProfile={true}
-            loading={loading}
-            loggedUser={loggedUser}
-            addLike={addLike}
-            removeLike={removeLike}
-          />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  );
 }
 
 export default ProfilePage;
